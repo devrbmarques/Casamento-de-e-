@@ -4,20 +4,13 @@ fechamento_valido = [')', ']', '}']
 dados_validos     = ['(', ')', '[', ']', '{', '}']
 
 def main(entrada):
-    x = entrada
-    #recebe nova_entrada
-    nova_palavra = (trata_entrada(x))
-    k = verifica(nova_palavra)
-    if k == False:
-        print(k)
-
-    percorrer_pilha()
-
-
-
-
-
-
+    try:
+        x = entrada
+        #recebe nova_entrada
+        nova_palavra = (trata_entrada(x))
+        print(verifica(nova_palavra))
+    except Exception:
+        print(True)
 
 
 
@@ -48,19 +41,25 @@ def verifica(nova_entrada):
             else:
                 k   = 0
                 aux = 0
-                for k in abertura_valida:
-                    if it == k:
-                        pilha.append(fechamento_valido[aux])
-                    else:
-                        aux += 1
-
-
+                #'it' faz parte da lista 'abertura_valida'?
+                if it in abertura_valida:
+                    for k in abertura_valida:
+                        #obtém qual dos 3 símbolos 'it' corresponde
+                        if it == k:
+                            #insere na pilha o símbolo oposto a 'it'
+                            pilha.append(fechamento_valido[aux])
+                        else:
+                            aux += 1
+                else:
+                    # 'it' faz parte da lista 'fechamento_valido'?
+                    if it in fechamento_valido:
+                        #compara se 'it' tem o seu correspondente no topo da pilha
+                        if it == pilha.pop():
+                            return True
+                        else:
+                            return False
 
 #def percorrer_entrada(nova_entrada):
-
-def percorrer_pilha():
-    while (len(pilha) != 0):
-        print(pilha.pop())
 
 
 main(input(""))
