@@ -3,13 +3,13 @@ abertura_valida   = ['(', '[', '{']
 fechamento_valido = [')', ']', '}']
 dados_validos     = ['(', ')', '[', ']', '{', '}']
 
-def main(entrada):
+def main():
     try:
-        x = entrada
+        x = input("")
         #recebe nova_entrada
         nova_palavra = (trata_entrada(x))
         print(verifica(nova_palavra))
-    except Exception:
+    except EOFError:
         print(True)
 
 
@@ -28,7 +28,6 @@ def verifica(nova_entrada):
     #verifica se o elemento x[0] da entrada informada é um ')', ']' ou '}'.
     #caso seja, False.
     if nova_entrada[0] in fechamento_valido:
-        print(nova_entrada[0])
         return False
     else:
         #verifica se há qualquer caractere diferente do aceitado no problema
@@ -41,6 +40,7 @@ def verifica(nova_entrada):
             else:
                 k   = 0
                 aux = 0
+                vazio = 0
                 #'it' faz parte da lista 'abertura_valida'?
                 if it in abertura_valida:
                     for k in abertura_valida:
@@ -48,6 +48,9 @@ def verifica(nova_entrada):
                         if it == k:
                             #insere na pilha o símbolo oposto a 'it'
                             pilha.append(fechamento_valido[aux])
+                            if teste_pilha_vazia(nova_entrada) == True:
+                                return True
+                            break
                         else:
                             aux += 1
                 else:
@@ -59,8 +62,18 @@ def verifica(nova_entrada):
                         else:
                             return False
 
+def teste_pilha_vazia(entrada):
+    nada = " "
+    if len(entrada) != 0:
+        for it in entrada:
+            #verifica em determinada posição se 'it' é diferente de 'nada'. Se sim, a lista não está vazia.
+            if it != nada:
+                return False
+        return True
+    else:
+        return True
 #def percorrer_entrada(nova_entrada):
 
 
-main(input(""))
+main()
 # S->SS/(S)/[S]/{S}/()/[]/{}
